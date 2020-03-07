@@ -31,11 +31,11 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="60dp"
+                    android:layout_marginEnd="10dp"
                     android:gravity="start|center"
                     android:orientation="horizontal"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
                     app:layout_collapseMode="parallax">
 
                     <LinearLayout
@@ -94,9 +94,9 @@
 
                         <Spinner
                             android:id="@+id/sp_product_count"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:spinnerMode="dropdown"/>
+                            android:spinnerMode="dropdown" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -109,9 +109,10 @@
                     app:layout_collapseMode="pin">
 
                     <FrameLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginEnd="20dp"
                         android:layout_marginTop="9dp"
                         android:layout_marginBottom="9dp"
                         android:background="@color/colorPrimary">
@@ -129,32 +130,27 @@
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_totalcount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@{@string/total_txt + Integer.toString(mainActivityItem.total)}"
+                android:textColor="@color/black"
+                tools:ignore="HardcodedText" />
 
-                <TextView
-                    android:id="@+id/tv_totalcount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="@{@string/total_txt + Integer.toString(mainActivityItem.total)}"
-                    android:textColor="@color/black"
-                    tools:ignore="HardcodedText" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp" />
-            </LinearLayout>
-        </ScrollView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp" />
+        </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

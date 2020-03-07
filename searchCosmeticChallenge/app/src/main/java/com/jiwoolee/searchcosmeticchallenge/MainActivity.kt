@@ -1,14 +1,12 @@
 package com.jiwoolee.searchcosmeticchallenge
 
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,7 +25,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONException
 import retrofit2.Retrofit
 import java.io.Serializable
-import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity(), OnItemClickListener, View.OnClickListener {
     private var disposable: CompositeDisposable? = CompositeDisposable() //retrofit 통신
@@ -56,10 +53,10 @@ class MainActivity : AppCompatActivity(), OnItemClickListener, View.OnClickListe
         start = 0
         getProductItem(makeSearchContentToJson()) //아이템 불러오기
 
-        tv_categrory_1.setOnClickListener(this)
-        tv_categrory_2.setOnClickListener(this)
-        tv_categrory_3.setOnClickListener(this)
-        tv_categrory_4.setOnClickListener(this)
+        binding.tvCategrory1.setOnClickListener(this)
+        binding.tvCategrory2.setOnClickListener(this)
+        binding.tvCategrory3.setOnClickListener(this)
+        binding.tvCategrory4.setOnClickListener(this)
     }
 
     private fun initToolbar() {
@@ -158,7 +155,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener, View.OnClickListe
         return gson.fromJson(jsonString, ProductData::class.java)
     }
 
-    //아이템 로드하기
+    //아이템 가져오기
     private fun getProductItem(data: ProductData) {
         disposable!!.add(iMyService!!.searchProducts(data)
             .subscribeOn(Schedulers.single()) //Api 호출은 한 번이므로 single
@@ -191,12 +188,12 @@ class MainActivity : AppCompatActivity(), OnItemClickListener, View.OnClickListe
         e.printStackTrace()
     }
 
-    override fun onClick(v: View?) { //상단 카테고리 선택(스킨/토너~마스크)
+    override fun onClick(v: View?) {
         var categoryId : Int? = null
-        lateinit var textView: TextView
+        var textView: TextView = binding.tvCategrory1
 
         when (v?.id) {
-            R.id.tv_categrory_1 -> {
+            R.id.tv_categrory_1 -> { //상단 카테고리 선택(스킨/토너~마스크)
                 categoryId = 0
                 textView = binding.tvCategrory1
             }
@@ -214,17 +211,21 @@ class MainActivity : AppCompatActivity(), OnItemClickListener, View.OnClickListe
             }
         }
 
+        setCategoryByClick(categoryId, textView)
+    }
+
+    private fun setCategoryByClick(id : Int?, textView: TextView){
         if (!isOn) { //선택되어있는 항목이 없을 때
-            setForCategoryItemAndRecyclerview(categoryId, textView, R.drawable.categorytext_circle)
+            drawBackgroundAndUpdateRecyclerview(id, textView, R.drawable.categorytext_circle)
             isOn = true
         } else {  //선택되어있는 항목이 있고,
-            if (preCategoryId != categoryId || preTextview != textView) { //원래 선택된 항목과는 다른 항목을 클릭했을 때
+            if (preCategoryId != id || preTextview != textView) { //원래 선택된 항목과는 다른 항목을 클릭했을 때
                 preTextview.setBackgroundResource(0);  //이전에 선택되어 있던 것은 해제
 
-                setForCategoryItemAndRecyclerview(categoryId, textView, R.drawable.categorytext_circle)
+                drawBackgroundAndUpdateRecyclerview(id, textView, R.drawable.categorytext_circle)
                 isOn = true
             } else { //원래 선택된 항목을 다시 클릭했을 때
-                setForCategoryItemAndRecyclerview(null, textView, 0)
+                drawBackgroundAndUpdateRecyclerview(null, textView, 0)
                 isOn = false
             }
         }
@@ -232,7 +233,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener, View.OnClickListe
         (binding.rvList.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(0, 20) //맨 위로 스크롤
     }
 
-    private fun setForCategoryItemAndRecyclerview(id: Int?, textView : TextView, background: Int) {
+    private fun drawBackgroundAndUpdateRecyclerview(id: Int?, textView : TextView, background: Int) {
         subCategory = when (id) { //카테고리 변경
             null -> null
             else -> arrayOf(id)

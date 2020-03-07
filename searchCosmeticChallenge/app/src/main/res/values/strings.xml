@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">searchCosmeticChallenge</string>
+    <string name="search_text">검색</string>
+    <string name="category1_text">스킨/토너</string>
+    <string name="category2_text">클렌징크림</string>
+    <string name="category3_text">선블록</string>
+    <string name="category4_text">마스크시트</string>
+    <string name="total_txt">제품 개수 :\t</string>
+</resources>

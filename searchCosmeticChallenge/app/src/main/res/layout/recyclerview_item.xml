@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="recyclerviewItem"
+            type="com.jiwoolee.searchcosmeticchallenge.data.SearchedItem" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_product_thumnail"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="2dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/thumbnail_corner"
+                android:padding="10dp"
+                app:setImage="@{recyclerviewItem.image}" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_product_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{recyclerviewItem.name}"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_product_brand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{recyclerviewItem.brand}"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

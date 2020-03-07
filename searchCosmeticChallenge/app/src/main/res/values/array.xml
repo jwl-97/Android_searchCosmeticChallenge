@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_array">
+        <item>10개씩</item>
+        <item>20개씩</item>
+        <item>30개씩</item>
+        <item>40개씩</item>
+        <item>50개씩</item>
+    </string-array>
+</resources>
